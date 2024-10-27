@@ -1,6 +1,24 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.bg{
+    background: linear-gradient(
+        rgba(0, 0, 0, 0.5),
+        rgba(0, 0, 0, 0.7)
+    ),
+    url("../../images/bg.png"); /* صورة الخلفية */
+    background-size: 100% 100%;
+    background-position: 50% 50%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .welcome-container {
     min-height: 100vh;
-    background-color: #f9f9f9;
+    /* background-color: #f9f9f9; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -11,13 +29,15 @@
   
   .welcome-title {
     font-size: 2.5em;
-    color: #2c3e50; /* لون النص */
+    color: #e3e8ec; /* لون النص */
     margin-bottom: 0.5em;
   }
   
   .welcome-text {
     font-size: 1.25em;
-    color: #7f8c8d;
+    font-family: "Open Sans", sans-serif;
+    font-weight: bold;
+    color: #e9f1f1;
     margin-bottom: 1.5em;
     line-height: 1.6;
   }
