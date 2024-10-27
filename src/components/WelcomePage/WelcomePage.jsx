@@ -1,23 +1,44 @@
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import axios from 'axios';
+import { useNavigate, useLocation } from 'react-router-dom';
 import './WelcomePage.css';
 
 export default function WelcomePage() {
   const [qrCode, setQrCode] = useState("");
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // استخراج التوكين من URL إذا كان موجودًا
+  const query = new URLSearchParams(location.search);
+  const token = query.get("token");
 
   useEffect(() => {
-    // طلب الـ token من السيرفر وتوليد QR code بناءً عليه
+    // توليد الـ QR code عند تحميل الصفحة
     axios.get("https://sportify-kids-backend.vercel.app/generate-qr")
       .then((response) => {
-        const token = response.data.token;  // استلام token من الاستجابة
-        const qrCodeURL = `https://sportify-kids-backend.vercel.app/verify-token?token=${token}`;  // تضمين token في الرابط
-        axios.post("https://sportify-kids-backend.vercel.app/generate-qr", { url: qrCodeURL })
-          .then((qrResponse) => setQrCode(qrResponse.data.qrCode))
-          .catch((error) => console.error("Error generating QR code", error));
+        setQrCode(response.data.qrCode);
       })
-      .catch((error) => console.error("Error fetching token", error));
+      .catch((error) => console.error("Error fetching QR code", error));
   }, []);
+
+  useEffect(() => {
+    // التحقق من صلاحية التوكين تلقائيًا إذا كان موجودًا
+    if (token) {
+      axios.get(`https://sportify-kids-backend.vercel.app/verify-token?token=${token}`)
+        .then((response) => {
+          if (response.data.valid) {
+            // التوجيه إلى الصفحة الرئيسية في حالة التوكين صحيح
+            navigate("/HomePage", { replace: true });
+          } else {
+            console.error("Invalid token.");
+          }
+        })
+        .catch((error) => {
+          console.error("Error verifying token", error);
+        });
+    }
+  }, [token, navigate]);
 
   return (
     <div className="bg">
