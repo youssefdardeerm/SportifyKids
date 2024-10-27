@@ -7,7 +7,7 @@ export default function WelcomePage() {
   const [qrCode, setQrCode] = useState("");
 
   useEffect(() => {
-    axios.get("http://localhost:5000/generate-qr")
+    axios.get("https://sportify-kids-backend.vercel.app/generate-qr")
       .then((response) => setQrCode(response.data.qrCode))
       .catch((error) => console.error("Error fetching QR code", error));
   }, []);
@@ -20,7 +20,7 @@ export default function WelcomePage() {
       </Helmet>
       
       <div className="text-center">
-        <h1 className="welcome-title mb-4">مرحباً بك في SportifyKids</h1>
+        <h1 className="welcome-title mb-4">SportifyKids مرحبا بكم في</h1>
         <p className="welcome-text lead mb-4"> لبدء رحلتك الرياضية شجع أطفالك على ممارسة الرياضة والاستمتاع بأنشطة صحية ممتعة</p>
         <p className="welcome-text lead mb-4">للدخول بالموقع QR Code رجاءا قم بمسح</p>
         {qrCode ? (
