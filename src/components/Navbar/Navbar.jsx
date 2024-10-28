@@ -1,96 +1,53 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import './Navbar.css';
-import logo from "../../images/logo.jpg"
-const Navbar = () => {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const location = useLocation();
-  const navigate = useNavigate();
+// Navbar.jsx
+import React from 'react';
+import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
+import i18n from 'i18next';
+import "./Navbar.css"
+function MyNavbar() {
+  const { t } = useTranslation();
+  const currentLang = i18n.language;
 
-  const getLinkClass = (path) => {
-    return location.pathname === path ? 'nav-link active' : 'nav-link';
+  // Toggle language between 'ar' and 'en'
+  const toggleLanguage = () => {
+    const newLang = currentLang === 'en' ? 'ar' : 'en';
+    i18n.changeLanguage(newLang);
   };
-
-  const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
-  };
-
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
-
-  const handleClickOutside = (event) => {
-    const dropdown = document.getElementById('settingsDropdown');
-    const navbar = document.querySelector('.navbar');
-
-    if (dropdown && !dropdown.contains(event.target) && !navbar.contains(event.target)) {
-      setDropdownOpen(false);
-    }
-    if (!navbar.contains(event.target) && menuOpen) {
-      setMenuOpen(false);
-    }
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    navigate('/');
-  };
-
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [menuOpen]);
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-dark">
-      <div className="container-fluid">
-        <Link className="navbar-brand" to="/HomePage">
-          <img src={logo} alt="Explore KSA" style={{ height: '40px', width: 'auto',borderRadius:"50%" }} /> {/* مسار الصورة هنا */}
-        </Link>
-        <button className="navbar-toggler bg-success" type="button" onClick={toggleMenu} aria-expanded={menuOpen}>
-          <span className="navbar-toggler-icon"></span>
-        </button>
-
-        <div className={`collapse navbar-collapse ${menuOpen ? 'show' : ''}`}>
-          <ul className="navbar-nav py-2 mx-auto mb-2 mb-lg-0">
-            <li className="nav-item">
-              <Link className={`${getLinkClass("/HomePage")} text-light`} to="/HomePage">Home</Link>
-            </li>
-            <li className="nav-item">
-              <Link className={`${getLinkClass("/Tourist-Destinations")} text-light`} to="/Tourist-Destinations">Destinations</Link>
-            </li>
-            <li className="nav-item">
-              <Link className={`${getLinkClass("/Tourist-Itineraries")} text-light`} to="/Tourist-Itineraries">Itineraries</Link>
-            </li>
-            <li className="nav-item">
-              <Link className={`${getLinkClass("/Accommodation")} text-light`} to="/Accommodation">Accommodation</Link>
-            </li>
-            <li className="nav-item">
-              <Link className={`${getLinkClass("/Transportation")} text-light`} to="/Transportation">Transportation</Link>
-            </li>
-            <li className="nav-item">
-              <Link className={`${getLinkClass("/Reviews-of-Users")} text-light`} to="/Reviews-of-Users">Reviews</Link>
-            </li>
-          </ul>
-
-          <div className="dropdown pt-1">
-            <button style={{ borderRadius: "50px" }} onClick={toggleDropdown} className="btn btn-success dropdown-toggle" id="settingsDropdown" aria-expanded={dropdownOpen}>
-              <i className="fas fa-cog"></i>
-            </button>
-            {dropdownOpen && (
-              <ul className="dropdown-menu" aria-labelledby="settingsDropdown">
-                <li><Link className="dropdown-item" to="/profile">Profile Page</Link></li>
-                <li><button className="dropdown-item" onClick={handleLogout}>Log Out</button></li>
-              </ul>
-            )}
-          </div>
-        </div>
-      </div>
-    </nav>
+    <Navbar className="bg-dark" expand="lg" dir={currentLang === 'ar' ? 'rtl' : 'ltr'}>
+      <Container>
+        {/* Toggle button with white color */}
+        <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'white', color: 'white' }}>
+          <span style={{ color: 'white' }}>☰</span> {/* Custom icon */}
+        </Navbar.Toggle>
+        
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
+            <Nav.Link className="text-light" as={Link} to="/HomePage">{t('home')}</Nav.Link>
+            <Nav.Link className="text-light" as={Link} to="/videos">{t('videos')}</Nav.Link>
+            <Nav.Link className="text-light" as={Link} to="/healthy-eating">{t('healthyEating')}</Nav.Link>
+            
+            {/* Dropdown with white arrow */}
+            <NavDropdown className="custom-dropdown" title={<span style={{ color: 'white' }}>{t('more')}</span>} id="basic-nav-dropdown" menuVariant="dark">
+              <NavDropdown.Item className="text-light" as={Link} to="/activity-stories">{t('activityStories')}</NavDropdown.Item>
+              <NavDropdown.Item className="text-light" as={Link} to="/child-data">{t('childData')}</NavDropdown.Item>
+              <NavDropdown.Item className="text-light" as={Link} to="/sports-comedy">{t('sportsComedy')}</NavDropdown.Item>
+              <NavDropdown.Item className="text-light" as={Link} to="/challenge">{t('challenge')}</NavDropdown.Item>
+              <NavDropdown.Item className="text-light" as={Link} to="/entertainment">{t('entertainment')}</NavDropdown.Item>
+              <NavDropdown.Item className="text-light" as={Link} to="/game">{t('game')}</NavDropdown.Item>
+            </NavDropdown>
+          </Nav>
+          <Nav>
+            <Nav.Link className="text-light" onClick={toggleLanguage}>
+              {currentLang === 'en' ? 'AR' : 'EN'}
+            </Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
-};
+}
 
-export default Navbar;
+export default MyNavbar;

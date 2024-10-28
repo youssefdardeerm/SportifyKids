@@ -1,11 +1,3 @@
-/* Global settings */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-}
-
 .header-section {
     position: relative;
 }
@@ -52,56 +44,103 @@
     padding: 60px 0;
 }
 
-.section img {
-    width: 100%;
-    height: auto;
-    border-radius: 10px;
+.section {
+    padding: 60px 0;
 }
 
-.section h2 {
+.sports-section {
+    padding: 40px 20px;
+    text-align: center;
+  }
+  
+  .sports-section h2 {
+    font-size: 2rem;
     margin-bottom: 20px;
-}
-
-.section .content {
+    color: #333;
+  }
+  
+  .sport-item {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s;
+  }
+  
+  .sport-item:hover {
+    transform: scale(1.05);
+  }
+  
+  .sport-item .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    justify-content: space-between;
-    margin-bottom: 40px;
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+    transform: translateY(-100%);
+  }
+  
+  .sport-item:hover .overlay {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .sport-item h3 {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+  
+  .sport-item p {
+    font-size: 1rem;
+    margin-top: 8px;
+  }
+
+  .tips-section {
+    padding: 40px 20px;
+    text-align: center;
 }
 
-.section .content img {
-    width: 45%;
+.tips-section h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
 }
 
-.section .content .text {
-    width: 50%;
+.tip-item {
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.section.bg-light {
-    background-color: #f8f9fa;
+.tip-item:hover {
+    transform: scale(1.05);
 }
 
-/* Adjustments for smaller screens */
-@media (max-width: 768px) {
-    .section .content {
-        flex-direction: column;
-        text-align: center;
-    }
+.tip-item h3 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 10px;
+}
 
-    .section .content img, .section .content .text {
-        width: 100%;
-        margin-bottom: 20px;
-    }
-
-    .carousel-caption {
-        bottom: 20%;
-    }
-
-    .carousel-caption h1 {
-        font-size: 2.5rem;
-    }
-
-    .carousel-caption p {
-        font-size: 1.2rem;
-    }
+.tip-item p {
+    color: #666;
+    text-align: center;
 }

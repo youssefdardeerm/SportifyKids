@@ -12,13 +12,13 @@ export default function NotFoundPage() {
         <meta name="description" content="NotFound page" />
       </Helmet>
       <h1 style={styles.header}>404 - Page Not Found</h1>
-      <p style={styles.text}>It looks like you're lost in the bank's system.</p>
+      <p style={styles.text}>It looks like you're lost in the SportifyKids 's system.</p>
       <p style={styles.text}>
         Don't worry, let's get you back to safety.
       </p>
       <button 
         style={styles.button}
-        onClick={() => navigate('/')} // Use navigate to go to the home page
+        onClick={() => navigate('/Homepage')} // Use navigate to go to the home page
       >
         Back to Home
       </button>
