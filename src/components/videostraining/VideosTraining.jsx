@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Container, Row, Col, Button, Pagination, Alert, Modal, Form, ProgressBar } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faVideo, faUpload } from '@fortawesome/free-solid-svg-icons';
+import { faVideo, faUpload, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
 
@@ -16,8 +16,10 @@ export default function VideosTraining() {
   const [uploadError, setUploadError] = useState(null);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true); // حالة التحميل
 
   const fetchVideos = async (page = 1) => {
+    setIsLoading(true); // ابدأ التحميل
     try {
       const response = await axios.get(`https://sportify-kids-backend.vercel.app/api/Trainingvideolibrary/getvideos?page=${page}`);
       setVideos(response.data.videos);
@@ -25,6 +27,8 @@ export default function VideosTraining() {
       setCurrentPage(response.data.currentPage);
     } catch (error) {
       console.error(t('errorFetchingVideos'));
+    } finally {
+      setIsLoading(false); // انتهاء التحميل
     }
   };
 
@@ -51,7 +55,7 @@ export default function VideosTraining() {
     setIsUploading(true);
 
     try {
-      const response = await axios.post('https://sportify-kids-backend.vercel.app/api/Trainingvideolibrary/uploadvideos', formData, {
+      await axios.post('https://sportify-kids-backend.vercel.app/api/Trainingvideolibrary/uploadvideos', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
         onUploadProgress: (progressEvent) => {
           const { loaded, total } = progressEvent;
@@ -78,19 +82,26 @@ export default function VideosTraining() {
         <meta name="description" content={t('homepageDescription')} />
       </Helmet>
       <h2 className="text-center mb-4">{t('videoSectionTitle')}</h2>
-      <Row>
-        {videos.length > 0 ? (
-          videos.map((video) => (
-            <Col md={3} key={video._id} className="mb-3">
-              <div className="video-container">
-                <video controls src={video.url} className="w-100 rounded" />
-              </div>
-            </Col>
-          ))
-        ) : (
-          <Alert variant="warning">{t('noVideos')}</Alert>
-        )}
-      </Row>
+
+      {isLoading ? (
+        <div className="d-flex justify-content-center align-items-center" style={{ height: '300px' }}>
+          <FontAwesomeIcon icon={faSpinner} spin size="3x" />
+        </div>
+      ) : (
+        <Row>
+          {videos.length > 0 ? (
+            videos.map((video) => (
+              <Col md={3} key={video._id} className="mb-3">
+                <div className="video-container">
+                  <video controls src={video.url} className="w-100 rounded" />
+                </div>
+              </Col>
+            ))
+          ) : (
+            <Alert variant="warning">{t('noVideos')}</Alert>
+          )}
+        </Row>
+      )}
 
       <Pagination className="justify-content-center mt-4">
         <Pagination.Prev onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1} />

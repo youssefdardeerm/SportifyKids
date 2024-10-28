@@ -63,7 +63,6 @@
         "copyright": "© 2024 Sportify Kids. All Rights Reserved."
     },
     "videoSectionTitle": "Training Videos library",
-    "noVideos": "No videos available.",
     "errorFetchingVideos": "An error occurred while fetching videos.",
     "uploadButton": "Upload Video to library",
     "uploadTitle": "Upload New Video",
