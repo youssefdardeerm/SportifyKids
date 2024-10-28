@@ -13,6 +13,7 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import HttpApi from 'i18next-http-backend';
 import cookies from "js-cookie"
 import Protucted from './components/Protucted/Protucted.jsx';
+import VideosTraining from './components/videostraining/VideosTraining.jsx';
 
 i18n.use(initReactI18next).use(LanguageDetector).use(HttpApi).init({
 
@@ -40,6 +41,7 @@ export default function App() {
       children: [
         { index: true, element: <WelcomePage /> },
         { path: '/HomePage', element: <Protucted><HomePage /></Protucted> },
+        { path: '/videos', element: <Protucted><VideosTraining /></Protucted> },
 
         { path: "*", element: <Notfoundpage /> }
       ]

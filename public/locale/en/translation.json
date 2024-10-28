@@ -61,5 +61,17 @@
         "twitter": "Twitter",
         "instagram": "Instagram",
         "copyright": "© 2024 Sportify Kids. All Rights Reserved."
-    }
+    },
+    "videoSectionTitle": "Training Videos library",
+    "noVideos": "No videos available.",
+    "errorFetchingVideos": "An error occurred while fetching videos.",
+    "uploadButton": "Upload Video to library",
+    "uploadTitle": "Upload New Video",
+    "selectFile": "Select a video file",
+    "uploadNote": "Please upload a short video to ensure smooth upload.",
+    "cancel": "Cancel",
+    "uploading": "Uploading",
+    "upload": "Upload",
+    "uploadError": "An error occurred during the upload.",
+    "libraryvideos": "Library Videos"
   }
