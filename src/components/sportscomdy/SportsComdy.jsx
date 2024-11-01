@@ -4,6 +4,7 @@ import ReactPlayer from 'react-player';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Helmet } from 'react-helmet';
 export default function SportsComedy() {
   const { t } = useTranslation();
   const [videos, setVideos] = useState([]);
@@ -60,6 +61,10 @@ export default function SportsComedy() {
 
   return (
     <div className="">
+        <Helmet>
+          <title>SportsComdy - كوكيديا الرياضة</title>
+          <meta name="description" content="موقع ترفيهي وتعليمي يشجع الأطفال على ممارسة الرياضة" />
+        </Helmet>
       <Container className="my-4">
         <h1 className="text-center mb-4">{t('sportsComedyTitle')}</h1>
         
@@ -83,6 +88,7 @@ export default function SportsComedy() {
             variant="secondary"
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
+            className='w-auto'
           >
             Previous
           </Button>
@@ -91,6 +97,7 @@ export default function SportsComedy() {
             variant="secondary"
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
+            className='w-auto'
           >
             Next
           </Button>

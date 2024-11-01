@@ -6,6 +6,7 @@ import './Quiz.css';
 import questions from '../../data/questions.js';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
+import { Helmet } from 'react-helmet';
 
 export default function Quiz() {
   const { t } = useTranslation();
@@ -66,6 +67,10 @@ export default function Quiz() {
 
   return (
     <div className="container my-5" style={{ maxWidth: "600px" }}>
+        <Helmet>
+          <title>quiz - الاختبار</title>
+          <meta name="description" content="موقع ترفيهي وتعليمي يشجع الأطفال على ممارسة الرياضة" />
+        </Helmet>
       <h1 className="text-center">{t('quizTitle')}</h1>
 
       {!quizStarted && (

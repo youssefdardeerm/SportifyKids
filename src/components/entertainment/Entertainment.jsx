@@ -63,7 +63,7 @@ export default function Entertainment() {
  
         <Container className="mt-4">
           <Helmet>
-            <title>{t('libraryvideo')}</title>
+            <title>Entertainment - الترفيه</title>
             <meta name="description" content={t('homepageDescription')} />
           </Helmet>
           <h2 className="text-center mb-4">{t('videoEntertainment')}</h2>

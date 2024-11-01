@@ -3,6 +3,7 @@ import { Container, Row, Col, Card, Spinner } from 'react-bootstrap';
 import ReactPlayer from 'react-player';
 import { useTranslation } from 'react-i18next';
 import './ActiviteStories.css';
+import { Helmet } from 'react-helmet';
 
 export default function ActiviteStories() {
   const { t } = useTranslation();
@@ -24,6 +25,10 @@ export default function ActiviteStories() {
 
   return (
     <Container>
+          <Helmet>
+          <title>activitestories - قصص النشاطات</title>
+          <meta name="description" content="موقع ترفيهي وتعليمي يشجع الأطفال على ممارسة الرياضة" />
+        </Helmet>
       <h2 className="text-center my-4">{t('activityStoriesTitle')}</h2>
 
       {loading ? (

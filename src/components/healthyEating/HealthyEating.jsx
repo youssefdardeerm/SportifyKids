@@ -6,6 +6,7 @@ import axios from 'axios';
 import ReactPlayer from 'react-player';
 import { useTranslation } from 'react-i18next';
 import './HealthyEating.css';
+import { Helmet } from 'react-helmet';
 
 export default function HealthyEating() {
   const { t } = useTranslation();
@@ -84,6 +85,10 @@ export default function HealthyEating() {
 
   return (
     <Container className="my-5">
+          <Helmet>
+          <title>healtheating - الاكل الصحي</title>
+          <meta name="description" content="موقع ترفيهي وتعليمي يشجع الأطفال على ممارسة الرياضة" />
+        </Helmet>
       {/* Healthy Tips Section */}
       <Row className="mb-4 text-center">
         <Col>

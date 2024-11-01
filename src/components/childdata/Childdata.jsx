@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Button, Form as BootstrapForm, Alert, Container, Row, Col, Pagination } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import './Childdata.css';
+import { Helmet } from 'react-helmet';
 
 // التحقق من البيانات باستخدام Yup
 const ChildSchema = Yup.object().shape({
@@ -100,6 +101,10 @@ export default function Childdata() {
 
   return (
     <Container>
+          <Helmet>
+          <title>childdata - بيانات الاطفال</title>
+          <meta name="description" content="موقع ترفيهي وتعليمي يشجع الأطفال على ممارسة الرياضة" />
+        </Helmet>
       {showCelebration && <div className="streamers">🎉🎉 {t('celebration_message')} 🎉🎉</div>}
       <Row className="justify-content-center mt-5">
         <Col md={6}>

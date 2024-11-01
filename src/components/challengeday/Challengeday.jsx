@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import ReactPlayer from 'react-player';
 import { Container, Row, Col, Button, Table, Pagination, Spinner, Alert } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { Helmet } from 'react-helmet';
 
 const challengeSchema = Yup.object().shape({
   firstRunner: Yup.object().shape({
@@ -149,6 +150,10 @@ export default function Challengeday() {
 
   return (
     <Container>
+          <Helmet>
+          <title>challengeday - تحدي اليوم</title>
+          <meta name="description" content="موقع ترفيهي وتعليمي يشجع الأطفال على ممارسة الرياضة" />
+        </Helmet>
       <h2 className="text-center my-5 py-5">{t('challengeDay')}</h2>
       {!isSaturday && (
        <div className='mt-5'>
