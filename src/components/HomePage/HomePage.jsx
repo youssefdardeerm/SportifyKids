@@ -96,7 +96,6 @@ export default function HomePage() {
 
       {/* Video Section */}
       <section className="video-section my-3" style={{ position: "relative", overflow: "hidden", height: "500px" }}>
-        <h2 style={{ position: "relative", zIndex: 2, color: "#fff", textAlign: "center" }}>{t('videoSectionTitle')}</h2>
         <div className="video-overlay" style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", zIndex: 1, backgroundColor: "rgba(0, 0, 0, 0.3)" }}></div>
         <iframe
           width="100%"
@@ -130,6 +129,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+     
     </>
   );
 }

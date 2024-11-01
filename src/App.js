@@ -14,7 +14,13 @@ import HttpApi from 'i18next-http-backend';
 import cookies from "js-cookie"
 import Protucted from './components/Protucted/Protucted.jsx';
 import VideosTraining from './components/videostraining/VideosTraining.jsx';
-
+import HealthyEating from './components/healthyEating/HealthyEating.jsx';
+import ActiviteStories from './components/ActiviteStories/ActiviteStories.jsx';
+import Childdata from './components/childdata/Childdata.jsx';
+import SportsComdy from './components/sportscomdy/SportsComdy.jsx';
+import Challengeday from './components/challengeday/Challengeday.jsx';
+import Quiz from './components/quiz/Quiz.jsx';
+import Entertainment from './components/entertainment/Entertainment.jsx';
 i18n.use(initReactI18next).use(LanguageDetector).use(HttpApi).init({
 
     fallbackLng: "en",
@@ -30,7 +36,7 @@ i18n.use(initReactI18next).use(LanguageDetector).use(HttpApi).init({
     }
   });
 
-
+  // Childdata
 export default function App() {
   const { t } = useTranslation();
   // Set up the router
@@ -42,7 +48,13 @@ export default function App() {
         { index: true, element: <WelcomePage /> },
         { path: '/HomePage', element: <Protucted><HomePage /></Protucted> },
         { path: '/videos', element: <Protucted><VideosTraining /></Protucted> },
-
+        { path: '/healthy-eating', element: <Protucted><HealthyEating /></Protucted> },
+        { path: '/activity-stories', element: <Protucted><ActiviteStories /></Protucted> },
+        { path: '/child-data', element: <Protucted><Childdata /></Protucted> },
+        { path: '/sports-comedy', element: <Protucted><SportsComdy /></Protucted> },
+        { path: '/challenge', element: <Protucted><Challengeday /></Protucted> },
+        { path: '/game', element: <Protucted><Quiz /></Protucted> },
+        { path: '/entertainment', element: <Protucted><Entertainment /></Protucted> },
         { path: "*", element: <Notfoundpage /> }
       ]
     }

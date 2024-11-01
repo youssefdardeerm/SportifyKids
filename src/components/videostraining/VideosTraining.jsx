@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faVideo, faUpload, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
+import ReactPlayer from 'react-player';
 
 export default function VideosTraining() {
   const { t } = useTranslation();
@@ -12,14 +13,13 @@ export default function VideosTraining() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [showModal, setShowModal] = useState(false);
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [videoUrl, setVideoUrl] = useState('');
   const [uploadError, setUploadError] = useState(null);
-  const [uploadProgress, setUploadProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
-  const [isLoading, setIsLoading] = useState(true); // حالة التحميل
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchVideos = async (page = 1) => {
-    setIsLoading(true); // ابدأ التحميل
+    setIsLoading(true);
     try {
       const response = await axios.get(`https://sportify-kids-backend.vercel.app/api/Trainingvideolibrary/getvideos?page=${page}`);
       setVideos(response.data.videos);
@@ -28,7 +28,7 @@ export default function VideosTraining() {
     } catch (error) {
       console.error(t('errorFetchingVideos'));
     } finally {
-      setIsLoading(false); // انتهاء التحميل
+      setIsLoading(false);
     }
   };
 
@@ -42,46 +42,32 @@ export default function VideosTraining() {
     }
   };
 
-  const handleFileChange = (e) => {
-    setSelectedFile(e.target.files[0]);
-  };
-
   const handleUpload = async () => {
-    if (!selectedFile) return;
-
-    const formData = new FormData();
-    formData.append('videolibrary', selectedFile);
+    if (!videoUrl) return;
 
     setIsUploading(true);
 
     try {
-      await axios.post('https://sportify-kids-backend.vercel.app/api/Trainingvideolibrary/uploadvideos', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-        onUploadProgress: (progressEvent) => {
-          const { loaded, total } = progressEvent;
-          const percent = Math.floor((loaded * 100) / total);
-          setUploadProgress(percent);
-        },
-      });
+      await axios.post('https://sportify-kids-backend.vercel.app/api/Trainingvideolibrary/uploadvideos', { url: videoUrl });
       setShowModal(false);
       setUploadError(null);
-      setUploadProgress(0);
+      setVideoUrl('');
       fetchVideos(currentPage);
     } catch (error) {
       setUploadError(t('uploadError'));
-      setUploadProgress(0);
     } finally {
       setIsUploading(false);
     }
   };
 
   return (
+ 
     <Container className="mt-4">
       <Helmet>
         <title>{t('libraryvideo')}</title>
         <meta name="description" content={t('homepageDescription')} />
       </Helmet>
-      <h2 className="text-center mb-4">{t('videoSectionTitle')}</h2>
+      <h2 className="text-center mb-4">{t('videoSectionTitlee')}</h2>
 
       {isLoading ? (
         <div className="d-flex justify-content-center align-items-center" style={{ height: '300px' }}>
@@ -93,7 +79,13 @@ export default function VideosTraining() {
             videos.map((video) => (
               <Col md={3} key={video._id} className="mb-3">
                 <div className="video-container">
-                  <video controls src={video.url} className="w-100 rounded" />
+                  <ReactPlayer
+                    url={video.url}
+                    width="100%"
+                    height="100%"
+                    controls
+                    onError={() => console.error(`Error playing video: ${video.url}`)}
+                  />
                 </div>
               </Col>
             ))
@@ -114,7 +106,7 @@ export default function VideosTraining() {
       </Pagination>
 
       <div className="text-center mt-4">
-        <Button variant="primary" className="my-3" onClick={() => setShowModal(true)}>
+        <Button variant="primary" className="my-5" onClick={() => setShowModal(true)}>
           <FontAwesomeIcon icon={faUpload} /> {t('uploadButton')}
         </Button>
       </div>
@@ -127,11 +119,18 @@ export default function VideosTraining() {
           {uploadError && <Alert variant="danger">{uploadError}</Alert>}
           <Form>
             <Form.Group>
-              <Form.Label>{t('selectFile')}</Form.Label>
-              <Form.Control type="file" onChange={handleFileChange} accept=".mp4" />
-              <Form.Text className="text-danger fs-6 fw-bold">{t('uploadNote')}</Form.Text>
+              <Form.Label>{t('enterVideoUrl')}</Form.Label>
+              <Form.Control
+                type="text"
+                value={videoUrl}
+                onChange={(e) => setVideoUrl(e.target.value)}
+                placeholder={t('enter Url video')}
+              />
+              <Form.Text className="text-danger fs-6 fw-bold">
+                {t('uploadNote')}<br />
+                {t('youtube Or External')} (e.g., Cloudinary, Google Drive, AWS S3)
+              </Form.Text>
             </Form.Group>
-            {isUploading && <ProgressBar now={uploadProgress} label={`${uploadProgress}%`} />}
           </Form>
         </Modal.Body>
         <Modal.Footer>
@@ -143,6 +142,8 @@ export default function VideosTraining() {
           </Button>
         </Modal.Footer>
       </Modal>
+      
     </Container>
+   
   );
 }

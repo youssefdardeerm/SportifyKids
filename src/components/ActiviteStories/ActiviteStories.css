@@ -1,0 +1,14 @@
+.video-card {
+    transition: transform 0.2s ease-in-out;
+  }
+  .video-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .story-card {
+    transition: background-color 0.2s ease-in-out;
+  }
+  .story-card:hover {
+    background-color: #f0f8ff;
+  }
+  

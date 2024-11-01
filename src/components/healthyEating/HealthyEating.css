@@ -1,0 +1,31 @@
+/* HealthyEating.css */
+
+.card-hover {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    background-color: #f8f9fa; /* Light background for card */
+  }
+  
+  .card-hover:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    background-color: #e9ecef; /* Slightly darker shade on hover */
+  }
+  
+  .card-hover .card-title {
+    color: #343a40; /* Darker title color */
+    transition: color 0.3s ease;
+  }
+  
+  .card-hover:hover .card-title {
+    color: #007bff; /* Change title color on hover */
+  }
+  
+  .card-hover .card-text {
+    color: #6c757d; /* Muted text color */
+    transition: color 0.3s ease;
+  }
+  
+  .card-hover:hover .card-text {
+    color: #495057; /* Slightly darker text on hover */
+  }
+  

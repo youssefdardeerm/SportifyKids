@@ -8,8 +8,8 @@ export default function Footer() {
     const { t } = useTranslation();
 
     return (
-        <footer className="footer">
-            <Container>
+        <footer className="footer pb-5">
+            <Container className='pb-5 mt-2'>
                 <Row className="footer-content">
                     <Col className="footer-logo text-center">
                         <h2>{t('footer.logo')}</h2>
